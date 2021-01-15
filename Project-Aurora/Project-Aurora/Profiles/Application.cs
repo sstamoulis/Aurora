@@ -527,7 +527,7 @@ namespace Aurora.Profiles
 
                             break;
                         case ".dll":
-                            var asm = System.Reflection.Assembly.LoadFile(script);
+                            var asm = Utils.AssemblyLoader.LoadFile(script);
                             foreach (var type in asm.GetExportedTypes())
                                 if (typeof(IEffectScript).IsAssignableFrom(type))
                                 {

@@ -700,6 +700,7 @@
     <Compile Include="Settings\Window_ProcessSelection.xaml.cs">
       <DependentUpon>Window_ProcessSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\AssemblyLoader.cs" />
     <Compile Include="Utils\AttachedApplication.cs" />
     <Compile Include="Utils\AudioDeviceProxy.cs" />
     <Compile Include="Utils\CollectionUtils.cs" />

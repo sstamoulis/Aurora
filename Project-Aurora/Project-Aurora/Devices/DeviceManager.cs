@@ -157,7 +157,7 @@ namespace Aurora.Devices
 
                                 break;
                             case ".dll":
-                                var asm = System.Reflection.Assembly.LoadFile(device_script);
+                                var asm = Utils.AssemblyLoader.LoadFile(device_script);
                                 foreach (var type in asm.GetExportedTypes())
                                     if (typeof(Device).IsAssignableFrom(type))
                                     {
