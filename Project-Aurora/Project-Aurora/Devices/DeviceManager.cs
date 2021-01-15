@@ -116,8 +116,8 @@ namespace Aurora.Devices
             devices.Add(new DeviceContainer(new Devices.Vulcan.VulcanDevice()));
             devices.Add(new DeviceContainer(new Devices.Uniwill.UniwillDevice()));
             devices.Add(new DeviceContainer(new Devices.Ducky.DuckyDevice()));              //Ducky Device
-            
- 
+
+
             string devices_scripts_path = System.IO.Path.Combine(Global.ExecutingDirectory, "Scripts", "Devices");
 
             if (Directory.Exists(devices_scripts_path))
@@ -155,6 +155,15 @@ namespace Aurora.Devices
                                     devices.Add(new DeviceContainer(scripted_device));
                                 }
 
+                                break;
+                            case ".dll":
+                                var asm = System.Reflection.Assembly.LoadFile(device_script);
+                                foreach (var type in asm.GetExportedTypes())
+                                    if (typeof(Device).IsAssignableFrom(type))
+                                    {
+                                        Device device = (Device)Activator.CreateInstance(type);
+                                        devices.Add(new DeviceContainer(device));
+                                    }
                                 break;
                             default:
                                 Global.logger.Error("Script with path {0} has an unsupported type/ext! ({1})", device_script, ext);

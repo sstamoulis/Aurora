@@ -526,6 +526,18 @@ namespace Aurora.Profiles
                             }
 
                             break;
+                        case ".dll":
+                            var asm = System.Reflection.Assembly.LoadFile(script);
+                            foreach (var type in asm.GetExportedTypes())
+                                if (typeof(IEffectScript).IsAssignableFrom(type))
+                                {
+                                    IEffectScript effect = (IEffectScript)Activator.CreateInstance(type);
+                                    if (!(effect.ID != null && this.RegisterEffect(effect.ID, effect)))
+                                        Global.logger.Warn(string.Format("Script \"{0}\" must have a unique string ID variable for the effect {1}", script, type.FullName));
+                                    else
+                                        anyLoaded = true;
+                                }
+                            break;
                         default:
                             Global.logger.Warn(string.Format("Script with path {0} has an unsupported type/ext! ({1})", script, ext));
                             continue;
